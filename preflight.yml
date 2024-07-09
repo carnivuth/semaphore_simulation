@@ -1,0 +1,38 @@
+---
+- name: Install semaphore
+  hosts: main
+  become: true
+  tasks:
+    - name: Install docker
+      ansible.builtin.include_role:
+        name: geerlingguy.docker
+
+    - name: create user
+      ansible.builtin.user:
+        name: semaphore
+        uid: 10000
+
+    - name: Create directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: semaphore
+      loop:
+        - "/usr/local/semaphore"
+        - "/var/lib/semaphore"
+        - "/etc/semaphore"
+
+    - name: copy docker compose file
+      ansible.builtin.copy:
+        src: semaphore.yml
+        dest: /usr/local/semaphore/docker-compose.yml
+        owner: semaphore
+
+    - name: "Start semaphore"
+      community.docker.docker_compose_v2:
+        project_src: "/usr/local/semaphore"
+        state: present
+        pull: always
+      register: result
+      retries: 5
+      delay: 1

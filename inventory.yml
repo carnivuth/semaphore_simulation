@@ -1,0 +1,24 @@
+---
+cluster_nodes:
+  hosts:
+    cluster_node_1:
+    cluster_node_2:
+    cluster_node_3:
+all:
+  hosts:
+
+    main:
+      ansible_user: vagrant
+      ansible_ssh_private_key_file: .vagrant/machines/main/virtualbox/private_key
+      ansible_host: 127.0.0.1
+      ansible_port: 2221
+      ansible_hostname: main
+      internal_address: 10.0.0.10
+
+    target:
+      ansible_user: vagrant
+      ansible_ssh_private_key_file: .vagrant/machines/target/virtualbox/private_key
+      ansible_host: 127.0.0.1
+      ansible_port: 2222
+      ansible_hostname: target
+      internal_address: 10.0.0.20
