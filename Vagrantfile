@@ -22,4 +22,7 @@ Vagrant.configure('2') do |config|
     machine.vm.network 'private_network', virtualbox__intnet: 'cluster', ip: '10.0.0.20'
   end
 
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "preflight.yml"
+  end
 end

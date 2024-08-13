@@ -1,6 +1,6 @@
 ---
 - name: Install semaphore
-  hosts: main
+  hosts: all
   become: true
   tasks:
     - name: Install docker
